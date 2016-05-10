@@ -1,0 +1,124 @@
+#imr_banner{
+	display:none !important;
+}
+#inxHeadAdsPlace{
+	display:none !important;
+}
+.ui-adoad-outer{
+	display:none !important;
+}
+
+#games .ad {
+	display:none !important;
+}
+
+.left_block object[width="180"], .left_block img[width="180"] {
+	visibility:hidden;
+	display:none !important;
+}
+#div_banner,#div_banner *,#table_banner,#table_banner * {
+	display:none !important;
+}
+.ui-set-height {
+	display:none !important;
+}
+.bxS_bigsent {
+	display:none !important;
+}
+
+#inx-ad-shop {
+	display:none !important;
+}
+#inx-ad-travel {
+	display:none !important;
+}
+#inx-shops {
+	display:none !important;
+}
+#inx-textAds {
+	display:none !important;
+}
+#inx-news {
+	display:none !important;
+}
+#inx-article .row-2 {
+	display:none !important;
+}
+.ierc-t3 {
+	display:none !important;
+}
+
+
+.left_block {
+	min-width:180px;
+}
+
+
+
+#bxS-unity-Banner, #bxS-unity-Banner-wrapper {
+    display:none !important;
+}
+
+div[class^="bxS-"]
+{
+    display:none !important;
+}
+
+div[id^="bxS-"]
+{
+    display:none !important;
+}
+
+td[class^="bxS-"]
+{
+    display:none !important;
+}
+
+td[id^="bxS-"]
+{
+    display:none !important;
+}
+
+.bxS-text_link {
+    display:none !important;
+}
+.bxS-leftbar {
+    display:none !important;
+}
+.ii-quota-bar {
+    display:none !important;
+}
+.inx-footer__row {
+    display:none !important;
+}
+
+.b-invite-friend {
+    display:none !important;
+}
+
+.bxS-before-compose {
+    display:none !important;
+}
+
+.b-kaspersky {
+    display:none !important;
+}
+
+#inx-main-roof,#inxAds-imr {
+    display:none !important;
+}
+
+
+td {
+    vertical-align: top !important;
+}
+
+.btn-bar .btn {
+    padding-left:20px;
+    padding-right:20px;
+}
+
+
+#mailbox_messages td {
+    padding:0px 2px !important;
+}
