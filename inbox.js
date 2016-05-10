@@ -77,6 +77,11 @@ function isCrap(email) {
 
     if (
         mylist.indexOf(email) != -1
+            || email.indexOf("@homeik.cn") > -1
+            || email.indexOf("topvisioncctv.") > -1
+            || email.indexOf("@vesti.ru") > -1
+            || email.indexOf("@11.lv") > -1
+            || email.indexOf("@boro.lv") > -1
             || email.indexOf("@open24.lv") > -1
             || email.indexOf("@uiutvdome.info") > -1
             || email.indexOf("@mediart.info") > -1
@@ -146,9 +151,38 @@ function isCrap(email) {
             || email.indexOf("@unibet-mail.com") > -1
             || email.indexOf("@betsafe.lv") > -1
             || email.indexOf("@viensviens.lv") > -1
+            || email.indexOf("@zolmaniem.lv") > -1
             || email.indexOf("@t-online.de") > -1
         ) {
         //console.log("crap:" + email);
+        return true;
+    }
+    //console.log("not crap:" + email);
+    return false;
+}
+
+function isImportant(email) {
+
+    var mylist = [
+        "billing@nic.lv"
+    ];
+
+
+    if (email == null) {
+        console.log(email);
+        console.log("NULL!");
+        return false;
+    }
+
+    email = email.trim().toLowerCase();
+
+    if (
+        mylist.indexOf(email) != -1
+            || email.indexOf(".gov.lv") > -1
+            || email.indexOf("@nic.lv") > -1
+            || email.indexOf("@vp.gov.lv") > -1
+        ) {
+        //console.log("important:" + email);
         return true;
     }
     //console.log("not crap:" + email);
@@ -334,16 +368,16 @@ function NavigateThrough(event) {
         var href = null;
         switch (event.keyCode ? event.keyCode : event.which ? event.which : null) {
             case 0x25:
-                link = document.getElementsByClassName('btn_prev')[0];
+                link = document.getElementById('toolbar_primary_ul_pull-right').getElementsByClassName('ifi-triangle-left')[0].parentNode;
                 break;
             case 0x27:
-                link = document.getElementsByClassName('btn_next')[0];
+                link = document.getElementById('toolbar_primary_ul_pull-right').getElementsByClassName('ifi-triangle-right')[0].parentNode;
                 break;
             case 0x26:
-                link = document.getElementsByClassName('btn_first')[0];
+                link = document.getElementById('toolbar_primary_ul_pull-right').getElementsByClassName('ifi-to-start')[0].parentNode;
                 break;
             case 0x28:
-                link = document.getElementsByClassName('btn_last')[0];
+                link = document.getElementById('toolbar_primary_ul_pull-right').getElementsByClassName('ifi-to-end')[0].parentNode;
                 break;
             case 0x24:
                 href = '/';
@@ -389,8 +423,11 @@ function AlwaysShowHideAttachments(e) {
 var shownAttachs = false;
 function ShowHideAttachments() {
 
+
+
     if (!shownAttachs) {
         shownAttachs = true;
+
 
 
         if ($('.attachs__list_copy').length > 0) {
@@ -413,10 +450,15 @@ function ShowHideAttachments() {
                         var ol = thisAtt.find('.eml__from').append('<ol class="attachs__list_copy attachs__list"></ol>').find('.attachs__list');
                         //$('body').append(data);
                         //console.log($(data).find('.action-view-attach').attr('href'));
+                        var countFound=0;
                         attachList.each(function () {
                             var thisAttUrl = $(this).find('a').attr('href');
                             ol.append('<a style="display:inline;float:left;" href="' + thisAttUrl + '" class="attachments__item-content" id="attach-no-0"><img alt="" width="200" style="float:left;" class="attachments__item-thumb" src="' + thisAttUrl + '"></a>');
+                            countFound++;
                         });
+                       if(countFound==0){
+                           ol.hide();
+                       }
 
 
                         //$( "body" ).html( data );
@@ -428,11 +470,23 @@ function ShowHideAttachments() {
                 ;
             });
         }
+
+        //console.log($('button[data-action=preview-pics][data-view=thumbs]').hasClass('hidden'));
+        //console.log($('button[data-action=preview-pics][data-view=tiles]').hasClass('hidden'));
+        //$('button[data-action=preview-pics][data-view=thumbs]').click();
+
+        setTimeout(function(){
+            $('button[data-action=preview-pics][data-view=thumbs]').click();
+        },100);
     } else {
+
+
         shownAttachs = false;
         $('.attachs__list_copy').hide();
-    }
 
+        $('button[data-action=preview-pics][data-view=tiles]').click();
+    }
+    console.log("ShowHideAttachments");
     SyncAttach();
 
 
@@ -501,14 +555,20 @@ $(document).ready(function () {
 
     var pokazatjFotkiText='<span class="ifi-eye-open"></span>'; // Показать фотки
 
-    $('.btn-toolbar_primary').append('<li class="btn-group" id="togglePhotos"><span class="btn">'+pokazatjFotkiText+'</span><label class="btn" id="alwaysShowPhotosLabel"><input id="alwaysShowPhotos" type="checkbox"> Always show</label></li>');
-    $('#togglePhotos').bind('click', ShowHideAttachments);
+    $('.btn-toolbar_primary').append('<li class="btn-group" id="togglePhotos"><span class="btn" id="toggleEyeButton">'+pokazatjFotkiText+'</span><label class="btn" id="alwaysShowPhotosLabel"><input id="alwaysShowPhotos" type="checkbox"> Always show</label></li>');
+
+    $('#togglePhotos #toggleEyeButton').bind('click', function(){
+        console.log("Click toggl");
+        ShowHideAttachments();
+    });
     $('#alwaysShowPhotos').bind('change', AlwaysShowHideAttachments);
 
     SyncAlwaysShowHideAttachments();
     if (alwaysShownAttachs) {
+        console.log("alwaysShownAttachs from ready");
         ShowHideAttachments();
     }
+    console.log("On ready!");
     SyncAttach();
 
 
@@ -530,39 +590,45 @@ $(document).ready(function () {
             row.parent().append(row);
         }
 
+        if (isImportant(email)) {
+
+            var row = $(this).parent().parent();
+            row.addClass('eml_important');
+            //row.parent().append(row);
+        }
+
     });
 
 
 });
 
+function removeSpam(){
 
-
-$(document).ready(function () {
-
-
-
+    //return;
     //delete crap button!
 
 
     var currentEmail = "";
     if ($('.inx-profile__email').length > 0) {
         currentEmail = $('.inx-profile__email').text();
-        console.log("current mail:"+currentEmail);
+        console.log("current mail:" + currentEmail);
     }
 
+
+
+    /*
+    //removing side products?
     var $inx = $('#inx-aside-products');
     if ($inx.length > 0) {
         $inx.empty();
     } else {
         var $inx = $('.m-folders_main');
     }
+    */
 
 
-
-
-
-    $('.b-invite-friend').hide().prev().hide();
-    $('.b-kaspersky').hide().prev().hide();
+    $('.b-invite-friend').hide();
+    $('.b-kaspersky').parent().hide();
     $("div[id^='bxS-']").hide();
     $("div[id^='cakeBox_']").hide();
     $("div[class^='bxS-']").hide();
@@ -588,13 +654,13 @@ $(document).ready(function () {
     $('i:contains("Сообщения в ящике отсутствуют.")').parent().parent().parent().parent().parent().append('<center><a href="http://puh.lv/ru/?utm_source=mail_empty&utm_medium=inbox.lv&utm_campaign=extension"><img src="http://puh.lv/images/b940x150.png" width="940" height="150"></a></center>');
     $('i:contains("Šajā pastkastītē ziņojumu nav.")').parent().parent().parent().parent().parent().append('<center><a href="http://puh.lv/lv/?utm_source=mail_empty&utm_medium=inbox.lv&utm_campaign=extension"><img src="http://puh.lv/images/b940x150.png" width="940" height="150"></a></center>');
 
-
-    var d = new Date();
-    var curr_hour = d.getHours();
-    var curr_min = d.getMinutes();
-    if (curr_min < 10)curr_min = '0' + curr_min;
-
     /*
+     var d = new Date();
+     var curr_hour = d.getHours();
+     var curr_min = d.getMinutes();
+     if (curr_min < 10)curr_min = '0' + curr_min;
+
+
      $('#mailbox_messages tr[class="item"]').after('' +
      '<tr style="cursor:pointer;cursor:hand;" rel="puh" class="unseen" onmouseover="javascript:this.className=\'unseen-hi\'" onmouseout="javascript:this.className=\'unseen\'">'+
      '<td nowrap="nowrap" rel="puh"><img height="12" width="12" vspace="3" hspace="5" alt="Ielūgums" src="http://puh.lv/images/heart12.gif"></td>'+
@@ -606,17 +672,21 @@ $(document).ready(function () {
      '</tr>');
      */
 
-    $('td[rel="puh"]').each(function () {
-        $(this).bind('click', function () {
-            document.location.href = "http://puh.lv/lv/?utm_source=mail&utm_medium=inbox.lv&utm_campaign=extension";
-        });
-    });
+
+    /*
+     $('td[rel="puh"]').each(function () {
+     $(this).bind('click', function () {
+     document.location.href = "http://puh.lv/lv/?utm_source=mail&utm_medium=inbox.lv&utm_campaign=extension";
+     });
+     });
 
 
-    $('#mailbox_messages td span:contains("PUH.lv")').each(function () {
-        $(this).parent().parent().find('input[type="checkbox"]').parent().next().next().prepend('<img height="10" width="10" style="vertical-align:bottom;margin-right:2px;" title="PUH.lv ziņojums" alt="PUH.lv ziņojums" src="http://puh.lv/images/heart10.gif">');
 
-    });
+     $('#mailbox_messages td a.eml__subject__link:contains("PUH.lv")').each(function () {
+     $(this).prepend('<img height="10" width="10" style="vertical-align:bottom;margin-right:2px;" title="PUH.lv ziņojums" alt="PUH.lv ziņojums" src="http://puh.lv/images/heart10.gif">');
+
+     });
+     */
 
 
     $('#imr_banner').parent().hide();
@@ -648,6 +718,19 @@ $(document).ready(function () {
 
     $('#step2Form').show();
     $('#mlusessl').attr('checked', false);
+
+
+
+
+}
+
+$(document).ready(function () {
+
+
+
+    removeSpam();
+
+
 
 
 });

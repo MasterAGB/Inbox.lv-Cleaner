@@ -12,6 +12,24 @@
 	display:none !important;
 }
 
+/* always show all folders */
+.m-folders_more {
+	display:block !important;
+}
+#btn-group_aside_btn_more, #btn-group_aside_btn_less, .unseen-stats {
+    display:none !important;
+}
+
+/* removing alerts + */
+.alert_has-icon {
+	display:none !important;
+}
+
+/* mail + */
+.b-ss {
+	display:none !important;
+}
+
 .left_block object[width="180"], .left_block img[width="180"] {
 	visibility:hidden;
 	display:none !important;
@@ -99,6 +117,9 @@ td[id^="bxS-"]
 .bxS-before-compose {
     display:none !important;
 }
+
+
+
 
 .b-kaspersky {
     display:none !important;
